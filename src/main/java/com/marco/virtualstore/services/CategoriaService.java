@@ -2,6 +2,7 @@ package com.marco.virtualstore.services;
 
 import com.marco.virtualstore.domains.Categoria;
 import com.marco.virtualstore.repositories.CategoriaRepository;
+import com.marco.virtualstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class CategoriaService {
 
     public Categoria buscaPorId(Long id) {
         Optional<Categoria> categoria = this.categoriaRepository.findById(id);
-        return categoria.orElse(null);
+        return categoria.orElseThrow(() ->
+                new ObjectNotFoundException("Objeto não encontrado! Id: "+id+", Tipo: "+Categoria.class.getName()));
     }
 }
