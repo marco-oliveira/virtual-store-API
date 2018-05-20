@@ -1,5 +1,6 @@
 package com.marco.virtualstore.domains;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -22,12 +23,11 @@ public class Estado implements Serializable {
 
     private String nome;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 
-    public Estado() {
-    }
+    public Estado() {}
 
     public Estado(Long id, String nome) {
         this.id = id;

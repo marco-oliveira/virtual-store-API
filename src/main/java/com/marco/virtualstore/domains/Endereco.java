@@ -29,7 +29,7 @@ public class Endereco implements Serializable {
 
     private String cep;
 
-    @OneToOne
+    @ManyToOne
     private Cidade cidade;
 
     @JsonBackReference
@@ -39,7 +39,8 @@ public class Endereco implements Serializable {
 
     public Endereco(){}
 
-    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, Cliente cliente) {
+    public Endereco(Long id, String logradouro, String numero, String complemento,
+                    String bairro, String cep, Cidade cidade, Cliente cliente) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;

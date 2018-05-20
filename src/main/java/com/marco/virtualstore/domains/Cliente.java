@@ -34,6 +34,7 @@ public class Cliente implements Serializable {
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
+    @CollectionTable(name = "TELEFONE")
     private List<String> telefones = new ArrayList<>();
 
     public Cliente(){}
