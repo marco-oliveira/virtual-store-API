@@ -37,6 +37,10 @@ public class Cliente implements Serializable {
     @CollectionTable(name = "TELEFONE")
     private List<String> telefones = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
+
     public Cliente(){}
 
     public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
@@ -97,6 +101,14 @@ public class Cliente implements Serializable {
 
     public List<String> getTelefones() {
         return telefones;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public void setTelefones(List<String> telefones) {
