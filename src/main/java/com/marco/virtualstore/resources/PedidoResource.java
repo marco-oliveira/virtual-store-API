@@ -20,8 +20,8 @@ public class PedidoResource {
     private PedidoService pedidoService;
 
     @GetMapping("{id}")
-    public ResponseEntity<?> find(@PathVariable Long id){
-        Pedido pedido = this.pedidoService.buscarPorId(id);
+    public ResponseEntity<Pedido> find(@PathVariable Long id){
+        Pedido pedido = this.pedidoService.find(id);
         return ResponseEntity.ok(pedido);
     }
 

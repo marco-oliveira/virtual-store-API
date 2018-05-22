@@ -21,9 +21,9 @@ public class CategoriaResource {
     private CategoriaService categoriaService;
 
     @GetMapping("{id}")
-    public ResponseEntity<?> find(@PathVariable Long id){
+    public ResponseEntity<Categoria> find(@PathVariable Long id){
 
-        Categoria categoria = this.categoriaService.buscaPorId(id);
+        Categoria categoria = this.categoriaService.find(id);
         return ResponseEntity.ok(categoria);
     }
 
@@ -35,7 +35,7 @@ public class CategoriaResource {
      */
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
-        Categoria result = this.categoriaService.salvar(categoria);
+        Categoria result = this.categoriaService.insert(categoria);
         //Boa prática uri no cabeçalho da resposta 201
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(result.getId()).toUri();

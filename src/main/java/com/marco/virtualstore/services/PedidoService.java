@@ -18,7 +18,7 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    public Pedido buscarPorId(Long id){
+    public Pedido find(Long id){
 
         Optional<Pedido> pedido = pedidoRepository.findById(id);
 
