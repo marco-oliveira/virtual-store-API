@@ -35,11 +35,27 @@ public class CategoriaResource {
      */
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody Categoria categoria){
-        Categoria result = this.categoriaService.insert(categoria);
+        categoria = this.categoriaService.insert(categoria);
         //Boa prática uri no cabeçalho da resposta 201
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
-                .buildAndExpand(result.getId()).toUri();
+                .buildAndExpand(categoria.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    /**
+     * Atualiza Categoria
+     *
+     * @param id
+     * @param categoria
+     * @return 204
+     */
+    @PutMapping("{id}")
+    public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Long id){
+        categoria.setId(id);
+
+        this.categoriaService.update(categoria);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

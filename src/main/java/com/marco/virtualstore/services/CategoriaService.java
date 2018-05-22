@@ -29,4 +29,9 @@ public class CategoriaService {
         return this.categoriaRepository.save(categoria);
 
     }
+
+    public Categoria update(Categoria categoria) {
+        find(categoria.getId()); //se não existir lança exception
+        return this.categoriaRepository.save(categoria);
+    }
 }
