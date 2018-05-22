@@ -20,6 +20,12 @@ public class CategoriaResource {
     @Autowired
     private CategoriaService categoriaService;
 
+    /**
+     * Busca categoria por id, e lista seus produtos
+     *
+     * @param id
+     * @return Categoria no formato Json
+     */
     @GetMapping("{id}")
     public ResponseEntity<Categoria> find(@PathVariable Long id){
 
@@ -55,6 +61,18 @@ public class CategoriaResource {
 
         this.categoriaService.update(categoria);
 
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Apaga uma categoria, erro interceptado por ResourceExceptionHandrer
+     *
+     * @param id
+     * @return 204
+     */
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        this.categoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -2,9 +2,12 @@ package com.marco.virtualstore.services;
 
 import com.marco.virtualstore.domains.Categoria;
 import com.marco.virtualstore.repositories.CategoriaRepository;
+import com.marco.virtualstore.services.exceptions.DataIntegrityException;
 import com.marco.virtualstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -33,5 +36,14 @@ public class CategoriaService {
     public Categoria update(Categoria categoria) {
         find(categoria.getId()); //se não existir lança exception
         return this.categoriaRepository.save(categoria);
+    }
+
+    public void delete(Long id) {
+        find(id);
+        try {
+            this.categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Categoria com produto não pode ser apagada.");
+        }
     }
 }
