@@ -1,8 +1,6 @@
 package com.marco.virtualstore.domains;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marco.virtualstore.domains.enums.TipoCliente;
 
 import javax.persistence.*;
@@ -31,7 +29,6 @@ public class Cliente implements Serializable {
 
     private Integer tipo;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -40,7 +37,7 @@ public class Cliente implements Serializable {
     private List<String> telefones = new ArrayList<>();
 
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
