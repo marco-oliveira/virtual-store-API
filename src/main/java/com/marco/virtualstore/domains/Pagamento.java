@@ -1,5 +1,6 @@
 package com.marco.virtualstore.domains;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.marco.virtualstore.domains.enums.EstadoPagamento;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public abstract class Pagamento implements Serializable {
 
     private Integer estado;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
