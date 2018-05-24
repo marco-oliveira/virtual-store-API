@@ -1,6 +1,7 @@
 package com.marco.virtualstore.resources;
 
 import com.marco.virtualstore.domains.Categoria;
+import com.marco.virtualstore.dtos.CategoriaDto;
 import com.marco.virtualstore.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marco Antônio on 18/05/2018
@@ -74,6 +78,22 @@ public class CategoriaResource {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.categoriaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    /**
+     * Lista todas as categorias padronizadas com DTO
+     *
+     * @return ResponseEntity<List<CategoriaDto>>
+     */
+    @GetMapping
+    public ResponseEntity<List<CategoriaDto>> findAll(){
+
+        List<Categoria> categorias = this.categoriaService.findAll();
+        List<CategoriaDto> listDto = categorias.stream().map(categoria ->
+                new CategoriaDto(categoria)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(listDto);
     }
 
 }
