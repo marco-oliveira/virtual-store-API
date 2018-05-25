@@ -6,6 +6,9 @@ import com.marco.virtualstore.services.exceptions.DataIntegrityException;
 import com.marco.virtualstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,4 +55,10 @@ public class CategoriaService {
 
         return this.categoriaRepository.findAll();
     }
+
+    public Page<Categoria> findPage(Integer page, Integer size, String direction, String orderBy ){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf(direction), orderBy);
+        return this.categoriaRepository.findAll(pageRequest);
+    }
 }
+
