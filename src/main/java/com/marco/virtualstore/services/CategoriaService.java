@@ -1,6 +1,7 @@
 package com.marco.virtualstore.services;
 
 import com.marco.virtualstore.domains.Categoria;
+import com.marco.virtualstore.dtos.CategoriaDto;
 import com.marco.virtualstore.repositories.CategoriaRepository;
 import com.marco.virtualstore.services.exceptions.DataIntegrityException;
 import com.marco.virtualstore.services.exceptions.ObjectNotFoundException;
@@ -59,6 +60,12 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer size, String direction, String orderBy ){
         PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf(direction), orderBy);
         return this.categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria fromDto(CategoriaDto categoriaDto) {
+
+        return new Categoria(categoriaDto.getId(), categoriaDto.getNome());
+
     }
 }
 
