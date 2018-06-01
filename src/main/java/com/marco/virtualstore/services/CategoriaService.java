@@ -39,8 +39,14 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria categoria) {
-        find(categoria.getId()); //se não existir lança exception
-        return this.categoriaRepository.save(categoria);
+        Categoria newCategoria = find(categoria.getId());
+        update(newCategoria, categoria);
+        return this.categoriaRepository.save(newCategoria);
+    }
+
+    private void update(Categoria newCategoria, Categoria categoria) {
+        newCategoria.setNome(categoria.getNome());
+
     }
 
     public void delete(Long id) {
