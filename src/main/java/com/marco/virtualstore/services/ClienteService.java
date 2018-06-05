@@ -66,7 +66,7 @@ public class ClienteService {
         try {
             this.clienteRepository.deleteById(id);
         } catch (DataIntegrityViolationException e){
-            throw new DataIntegrityException("Cliente com dependencias cadastradas não pode ser apagado.");
+            throw new DataIntegrityException("Cliente com pedidos, não podem ser apagados.");
         }
     }
 

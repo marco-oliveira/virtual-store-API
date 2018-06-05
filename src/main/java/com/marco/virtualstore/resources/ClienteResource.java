@@ -36,8 +36,8 @@ public class ClienteResource {
     public ResponseEntity<Void> insert(@Valid @RequestBody NewClienteDto newClienteDto){
         Cliente cliente = this.clienteService.fromDto(newClienteDto);
         cliente = this.clienteService.insert(cliente);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/id").buildAndExpand(cliente.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{id}").buildAndExpand(cliente.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
