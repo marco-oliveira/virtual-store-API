@@ -2,13 +2,16 @@ package com.marco.virtualstore.resources;
 
 import com.marco.virtualstore.domains.Cliente;
 import com.marco.virtualstore.dtos.ClienteDto;
+import com.marco.virtualstore.dtos.NewClienteDto;
 import com.marco.virtualstore.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,15 @@ public class ClienteResource {
         Cliente cliente = this.clienteService.find(id);
 
         return ResponseEntity.ok(cliente);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody NewClienteDto newClienteDto){
+        Cliente cliente = this.clienteService.fromDto(newClienteDto);
+        cliente = this.clienteService.insert(cliente);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/id").buildAndExpand(cliente.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("{id}")
