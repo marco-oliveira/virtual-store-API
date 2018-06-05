@@ -1,31 +1,46 @@
 package com.marco.virtualstore.dtos;
 
+import com.marco.virtualstore.services.validations.ClienteInsert;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+@ClienteInsert
 public class NewClienteDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotEmpty(message = "O campo é Obrigatório.")
+	@Length(min = 5, max = 80, message = "Deve ter entre 5 a 80 caracteres.")
 	private String nome;
-	
+
+	@NotEmpty(message = "O campo é Obrigatório.")
+	@Email(message = "Email inválido.")
 	private String email;
-	
+
+	@NotEmpty(message = "O campo é Obrigatório.")
 	private String cpfOuCnpj;
 
     private Integer tipo;
-    
+
+	@NotEmpty(message = "O campo é Obrigatório.")
     private String logradouro;
 
+	@NotEmpty(message = "O campo é Obrigatório.")
     private String numero;
 
     private String complemento;
 
     private String bairro;
 
+	@NotEmpty(message = "O campo é Obrigatório.")
     private String cep;
     
     private Long cidadeId;
 
+	@NotEmpty(message = "O campo é Obrigatório.")
     private String telefone1;
 
 	private String telefone2;
