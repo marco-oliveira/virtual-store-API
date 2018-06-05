@@ -1,6 +1,7 @@
 package com.marco.virtualstore.dtos;
 
 import com.marco.virtualstore.domains.Cliente;
+import com.marco.virtualstore.services.validations.ClienteUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 /**
  * Created by Marco Antônio on 28/05/2018
  */
+@ClienteUpdate
 public class ClienteDto implements Serializable {
 
     private static final long serialVersionUID = -7375799058490653550L;
