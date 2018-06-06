@@ -1,5 +1,6 @@
 package com.marco.virtualstore.domains;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.marco.virtualstore.domains.enums.EstadoPagamento;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
  * Created by Marco Antônio on 20/05/2018
  */
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 
     private static final long serialVersionUID = 5466190406393694181L;

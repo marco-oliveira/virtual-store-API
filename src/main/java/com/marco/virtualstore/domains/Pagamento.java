@@ -1,6 +1,7 @@
 package com.marco.virtualstore.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.marco.virtualstore.domains.enums.EstadoPagamento;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Objects;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
     private static final long serialVersionUID = -279314140844544949L;
