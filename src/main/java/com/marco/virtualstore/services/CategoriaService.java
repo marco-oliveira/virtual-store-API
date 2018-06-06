@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,11 +39,11 @@ public class CategoriaService {
 
     public Categoria update(Categoria categoria) {
         Categoria newCategoria = find(categoria.getId());
-        update(newCategoria, categoria);
+        updateData(newCategoria, categoria);
         return this.categoriaRepository.save(newCategoria);
     }
 
-    private void update(Categoria newCategoria, Categoria categoria) {
+    private void updateData(Categoria newCategoria, Categoria categoria) {
         newCategoria.setNome(categoria.getNome());
 
     }
