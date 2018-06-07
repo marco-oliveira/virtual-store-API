@@ -4,6 +4,7 @@ import com.marco.virtualstore.domains.Produto;
 import com.marco.virtualstore.dtos.ProdutoDto;
 import com.marco.virtualstore.resources.utils.URL;
 import com.marco.virtualstore.services.ProdutoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,14 @@ public class ProdutoResource {
     @Autowired
     private ProdutoService produtoService;
 
+    @ApiOperation(value="Busca por Id")
     @GetMapping("{id}")
     public ResponseEntity<Produto> find(@PathVariable Long id){
         Produto produto = this.produtoService.find(id);
         return ResponseEntity.ok(produto);
     }
 
+    @ApiOperation(value="Retorna Produtos Paginados")
     @GetMapping
     public ResponseEntity<Page<ProdutoDto>> findPage(
             @RequestParam(name = "nome", defaultValue = "") String nome,

@@ -3,6 +3,9 @@ package com.marco.virtualstore.resources;
 import com.marco.virtualstore.domains.Categoria;
 import com.marco.virtualstore.dtos.CategoriaDto;
 import com.marco.virtualstore.services.CategoriaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,7 @@ public class CategoriaResource {
      * @param id
      * @return Categoria no formato Json
      */
+    @ApiOperation(value="Busca por id")
     @GetMapping("{id}")
     public ResponseEntity<Categoria> find(@PathVariable Long id){
 
@@ -44,6 +48,7 @@ public class CategoriaResource {
      * @param categoriaDto
      * @return 201
      */
+    @ApiOperation(value="Insere Categoria")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDto categoriaDto){
         Categoria categoria = this.categoriaService.fromDto(categoriaDto);
@@ -61,6 +66,7 @@ public class CategoriaResource {
      * @param categoriaDto
      * @return 204
      */
+    @ApiOperation(value="Atualiza Categoria")
     @PutMapping("{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDto categoriaDto, @PathVariable Long id){
 
@@ -78,6 +84,10 @@ public class CategoriaResource {
      * @param id
      * @return 204
      */
+    @ApiOperation(value="Remove Categoria")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+            @ApiResponse(code = 404, message = "Código inexistente") })
     @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.categoriaService.delete(id);
@@ -90,6 +100,7 @@ public class CategoriaResource {
      *
      * @return ResponseEntity<List<CategoriaDto>>
      */
+    @ApiOperation(value="Retorna Todas Categorias")
     @GetMapping
     public ResponseEntity<List<CategoriaDto>> findAll(){
 
@@ -109,6 +120,7 @@ public class CategoriaResource {
      * @param orderBy
      * @return ResponseEntity<Page<CategoriaDto>>
      */
+    @ApiOperation(value="Retorna Todas Categorias Paginadas")
     @GetMapping("page")
     public ResponseEntity<Page<CategoriaDto>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

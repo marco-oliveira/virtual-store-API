@@ -2,6 +2,7 @@ package com.marco.virtualstore.resources;
 
 import com.marco.virtualstore.domains.Pedido;
 import com.marco.virtualstore.services.PedidoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,14 @@ public class PedidoResource {
     @Autowired
     private PedidoService pedidoService;
 
+    @ApiOperation(value="Busca por Id")
     @GetMapping("{id}")
     public ResponseEntity<Pedido> find(@PathVariable Long id){
         Pedido pedido = this.pedidoService.find(id);
         return ResponseEntity.ok(pedido);
     }
 
+    @ApiOperation(value="Insere Pedido")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody Pedido pedido){
         pedido = this.pedidoService.insert(pedido);
