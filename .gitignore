@@ -26,3 +26,6 @@
 
 ### Docs ###
 /docs/arquivos/
+
+### Configuração de Produção ###
+src/main/resources/application-prod.properties
