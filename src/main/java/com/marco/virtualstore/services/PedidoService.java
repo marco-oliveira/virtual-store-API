@@ -10,6 +10,7 @@ import com.marco.virtualstore.repositories.PedidoRepository;
 import com.marco.virtualstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,9 @@ public class PedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     public Pedido find(Long id){
 
         Optional<Pedido> pedido = pedidoRepository.findById(id);
@@ -47,9 +51,11 @@ public class PedidoService {
     }
 
 
+    @Transactional
     public Pedido insert(Pedido pedido) {
         pedido.setId(null);
         pedido.setInstance(new Date());
+        pedido.setCliente(this.clienteService.find(pedido.getCliente().getId()));
         pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
         pedido.getPagamento().setPedido(pedido);
 
@@ -62,11 +68,12 @@ public class PedidoService {
         Pedido finalPedido = pedido;
         pedido.getItens().forEach(itemPedido -> {
            itemPedido.setDesconto(0.0);
-           itemPedido.setPreco(this.produtoService.find(itemPedido.getProduto().getId()).getPreco());
+           itemPedido.setProduto(this.produtoService.find(itemPedido.getProduto().getId()));
+           itemPedido.setPreco(itemPedido.getProduto().getPreco());
            itemPedido.setPedido(finalPedido);
        });
         this.itemPedidoRepository.saveAll(pedido.getItens());
-
+        System.out.println(pedido);
         return pedido;
     }
 }
