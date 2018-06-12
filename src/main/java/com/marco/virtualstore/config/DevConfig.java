@@ -1,6 +1,8 @@
 package com.marco.virtualstore.config;
 
 import com.marco.virtualstore.services.DBService;
+import com.marco.virtualstore.services.EmailService;
+import com.marco.virtualstore.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +32,10 @@ public class DevConfig {
 
         this.dbService.instantiateTestDataBase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }
