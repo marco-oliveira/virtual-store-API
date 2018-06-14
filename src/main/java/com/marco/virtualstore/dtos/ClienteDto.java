@@ -32,7 +32,6 @@ public class ClienteDto implements Serializable {
     public ClienteDto(Cliente cliente){
         id = cliente.getId();
         nome = cliente.getNome();
-        email = cliente.getEmail();
     }
 
     public Long getId() {
@@ -58,4 +57,5 @@ public class ClienteDto implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

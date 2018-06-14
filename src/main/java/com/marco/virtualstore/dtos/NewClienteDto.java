@@ -47,6 +47,9 @@ public class NewClienteDto implements Serializable {
 
 	private String telefone3;
 
+	@NotEmpty(message = "O campo é Obrigatório.")
+	private String senha;
+
     public NewClienteDto() {}
 
 	public String getNome() {
@@ -152,6 +155,12 @@ public class NewClienteDto implements Serializable {
 	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
 	}
-    
-    
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 }
