@@ -2,6 +2,7 @@ package com.marco.virtualstore.services;
 
 import com.marco.virtualstore.domains.*;
 import com.marco.virtualstore.domains.enums.EstadoPagamento;
+import com.marco.virtualstore.domains.enums.Perfil;
 import com.marco.virtualstore.domains.enums.TipoCliente;
 import com.marco.virtualstore.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,15 +118,25 @@ public class DBService {
 
         cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
+        Cliente cli2 = new Cliente(null, "Marco", "m4rco.oliveir4@gmail.com",
+                "12046888006", TipoCliente.PESSOAFISICA, encoder.encode("123456"));
+
+        cli2.getTelefones().addAll(Arrays.asList("54545898", "98556552"));
+        cli2.addPerfil(Perfil.ADMIN);
+
         Endereco e1 = new Endereco(null, "Rua Flores", "300",
                 "Apto 203", "Jardim", "38220834", c1, cli1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105",
                 "Sala 800", "Centro", "38777012", c2, cli1);
 
-        cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-        this.clienteRepository.save(cli1);
+        Endereco e3 = new Endereco(null, "Avenida Matos", "105",
+                null, "Centro", "38777012", c2, cli2);
 
-        this.enderecoRepository.saveAll(Arrays.asList(e1, e2));
+        cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+        cli1.getEnderecos().addAll(Arrays.asList(e3));
+        this.clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+
+        this.enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

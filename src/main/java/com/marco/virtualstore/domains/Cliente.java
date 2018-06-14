@@ -1,13 +1,13 @@
 package com.marco.virtualstore.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.marco.virtualstore.domains.enums.Perfil;
 import com.marco.virtualstore.domains.enums.TipoCliente;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marco Antônio on 19/05/2018
@@ -30,6 +30,7 @@ public class Cliente implements Serializable {
 
     private Integer tipo;
 
+    @JsonIgnore
     private String senha;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -44,7 +45,13 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 
-    public Cliente(){}
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis =  new HashSet<>();
+
+    public Cliente(){
+        addPerfil(Perfil.CLIENTE);
+    }
 
     public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
         this.id = id;
@@ -53,6 +60,7 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = (tipo == null)?null: tipo.getCod();
         this.senha = senha;
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Long getId() {
@@ -95,6 +103,22 @@ public class Cliente implements Serializable {
         this.tipo = tipo.getCod();
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Set<Perfil> getPerfil(){
+        return this.perfis.stream().map(integer -> Perfil.toEnum(integer)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil){
+        perfis.add(perfil.getCod());
+    }
+
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
@@ -121,14 +145,6 @@ public class Cliente implements Serializable {
 
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     @Override
